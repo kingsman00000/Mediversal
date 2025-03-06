@@ -26,8 +26,8 @@ const StyledScrollView = styled(ScrollView);
 const StyledCustomText = styled(CustomText);
 
 const ToggleButtons = ({ isMobile, setIsMobile }) => (
-  <StyledView className="flex-row items-center p-1 mb-5 bg-[#E8F4F7] rounded-xl">
-    <StyledView className="flex-row flex-1 overflow-hidden bg-white rounded-lg">
+  <StyledView className="flex-row items-center p-1 mb-6 bg-[#E8F4F7] rounded-xl">
+    <StyledView className="flex-row flex-1 overflow-hidden bg-[#F8F8F8] rounded-lg">
       {["Mobile Number", "Email"].map((label, index) => {
         const selected = isMobile === (index === 0);
         return (
@@ -36,7 +36,7 @@ const ToggleButtons = ({ isMobile, setIsMobile }) => (
             className={`flex-1 p-3 items-center ${selected ? "bg-[#0088B1] rounded-lg" : ""}`}
             onPress={() => setIsMobile(index === 0)}
           >
-            <StyledCustomText className={`text-lg  ${selected ? "text-white font-bold" : "text-gray-600 "}`}>{label}</StyledCustomText>
+            <StyledCustomText className={`text-sm  ${selected ? "text-[#F8F8F8] font-semibold" : "text-gray-600 "}`}>{label}</StyledCustomText>
           </StyledTouchableOpacity>
         );
       })}
@@ -69,14 +69,14 @@ const LoginScreen = () => {
               <StyledImage source={require("../assets/photos/Carosel.png")} className="w-70 h-70" resizeMode="contain" />
             </StyledView>
           )}
-          <StyledView className="self-start pb-1 pl-5">
-            <StyledCustomText className={`${theme.font.primary} ${theme.font.opacity} ${theme.colors.white} text-[20px] ${theme.font.weightMedium} pb-2`} >{headerText}</StyledCustomText>
-            <StyledCustomText className={`${theme.font.primary} ${theme.colors.white} text-[40px] ${theme.font.weightBold}`} style={{ lineHeight: 40, paddingBottom: 8 }}>{subHeaderText}</StyledCustomText>
+          <StyledView className="self-start pb-1 pl-8">
+            <StyledCustomText className={`${theme.font.primary} ${theme.font.opacity} ${theme.colors.secondary} text-[20px] ${theme.font.weightMedium} pb-2`} >{headerText}</StyledCustomText>
+            <StyledCustomText className={`${theme.font.primary} ${theme.colors.secondary} text-[40px] ${theme.font.weightBold}`} style={{ lineHeight: 40, paddingBottom: 8 }}>{subHeaderText}</StyledCustomText>
           </StyledView>
         </StyledView>
 
         {/* 🟢 Bottom Section */}
-        <StyledView className="flex-1 pt-10 pb-4 pl-8 pr-8 bg-white rounded-t-3xl">
+        <StyledView className="flex-1 pt-8 pl-8 pr-8 bg-[#F8F8F8] rounded-t-3xl">
           {isSignup ? (
             <>
               <EmailSignup />
@@ -89,13 +89,16 @@ const LoginScreen = () => {
               {isMobile ? <MobileInput /> : <EmailLogin />}
               {!isMobile && <DividerWithText text="or Login with" />}
               {!isMobile && <GoogleLoginButton />}
-              <StyledCustomText className={`mt-8 text-base text-center ${theme.colors.black}`}>Need Help?</StyledCustomText>
-              <StyledView className="flex-row justify-center mt-8 text-base">
-                <StyledCustomText className="mt-6 text-base text-gray-700">Don’t have an account? </StyledCustomText>
-                <StyledTouchableOpacity onPress={() => { setIsSignup(true); setIsMobile(false); }}>
-                  <StyledCustomText className="mt-6 text-[#0088B1] font-bold text-base">Create Account</StyledCustomText>
-                </StyledTouchableOpacity>
-              </StyledView>
+              <StyledCustomText className={`mt-8 text-sm text-center ${theme.colors.black}`}>Need Help logging in?</StyledCustomText>
+              <StyledView className="flex-row justify-center mt-12">
+             <StyledCustomText className="text-gray-500 text-xs"> By logging in you agree to our</StyledCustomText>
+             <StyledTouchableOpacity onPress={() => { /* Handle Terms & Conditions Click */ }}>
+              <StyledCustomText className="text-gray-500 text-xs font-bold">
+              {" "}Terms & Condition
+             </StyledCustomText>
+            </StyledTouchableOpacity>
+            </StyledView>
+
             </>
           )}
         </StyledView>

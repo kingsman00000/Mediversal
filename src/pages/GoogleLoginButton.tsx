@@ -58,16 +58,16 @@ const GoogleLoginButton = () => {
 
   return (
     <StyledTouchableOpacity
-      className={`flex-row items-center justify-center p-4  bg-[#E8F4F7] rounded-xl border-2 border-[#0088b1]`}
+      className={`flex-row items-center justify-center px-4 py-3  bg-[#E8F4F7] rounded-xl border-[1px] border-[#0088b1]`}
       onPress={handleGoogleLogin}
     >
       <StyledImage
-        source={require("../assets/photos/google.png")}
+        source={require("../assets/icons/Google_Icon_png.png")}
         className="w-6 h-6 "
         resizeMode="contain"
       />
       <StyledView className="w-[1px] h-6 bg-gray-400 mx-4" />
-      <StyledText className={`text-lg font-bold ${theme.colors.black}`}>Login with Google</StyledText>
+      <StyledText className={`text-base font-medium ${theme.colors.black}`}>Login with Google</StyledText>
     </StyledTouchableOpacity>
   );
 };

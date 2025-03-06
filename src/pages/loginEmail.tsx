@@ -10,7 +10,7 @@ import {
 import { styled } from "nativewind";
 import ForgotPasswordModal from "./ForgotPasswordModal";
 import { IP_ADDR } from "@env";
-import { Eye, EyeOff } from "lucide-react-native"; // 👀 Import password toggle icons
+import { Eye, EyeOff } from "lucide-react-native"; //  Import password toggle icons
 
 // ✅ Styled Components
 const StyledView = styled(View);
@@ -118,7 +118,7 @@ const EmailLogin = () => {
     <StyledView>
       {/* Email Input */}
       <StyledTextInput
-        className="p-4 mb-2 text-base text-gray-800 placeholder-[#b3b3b3] border border-gray-300 rounded-xl"
+        className="p-4 mb-1 mt-2 text-base text-gray-800 placeholder-[#b3b3b3] border border-gray-300 rounded-xl"
         placeholder="mediversal@gmail.com"
         value={credentials.email}
         onChangeText={(text) => setCredentials({ ...credentials, email: text })}
@@ -148,7 +148,7 @@ const EmailLogin = () => {
           className="absolute right-4 top-8"
           onPress={() => setIsPasswordVisible(!isPasswordVisible)}
         >
-          {isPasswordVisible ? <EyeOff size={20} color="#0088b1" /> : <Eye size={20} color="#0088b1" />}
+          {isPasswordVisible ? <EyeOff size={24} color="#0088b1" /> : <Eye size={24} color="#0088b1" />}
         </StyledTouchableOpacity>
       </StyledView>
       {showErrors && errors.password && (
@@ -156,9 +156,9 @@ const EmailLogin = () => {
       )}
 
       {/* Forgot Password Link */}
-      <StyledView className="flex flex-row justify-end w-full pt-4 pb-4">
+      <StyledView className="flex flex-row justify-end w-full pt-2 pb-4">
         <StyledTouchableOpacity onPress={handleForgotPassword} className="mt-3">
-          <StyledText className="text-[#0088B1] text-base font-xl font-medium">
+          <StyledText className="text-[#0088B1] text-base font-xl font-regular">
             Forgot Password?
           </StyledText>
         </StyledTouchableOpacity>
@@ -166,14 +166,14 @@ const EmailLogin = () => {
 
       {/* Login Button */}
       <StyledTouchableOpacity
-        className="p-4 mt-5 rounded-xl items-center bg-[#0088B1]"
+        className="p-4 rounded-xl items-center bg-[#0088B1]"
         onPress={handleLogin}
         disabled={loading}
       >
         {loading ? (
-          <ActivityIndicator color="#ffffff" />
+          <ActivityIndicator color="#E8F4F7" />
         ) : (
-          <StyledText className="text-lg font-medium text-white">Login</StyledText>
+          <StyledText className="text-base font-medium text-[#F8F8F8]">Login</StyledText>
         )}
       </StyledTouchableOpacity>
       

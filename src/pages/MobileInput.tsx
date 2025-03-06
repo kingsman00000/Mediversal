@@ -81,15 +81,15 @@ const MobileInput = () => {
 
 
   return (
-    <StyledView className="flex-col items-center w-full p-2">
+    <StyledView className="flex-col items-center w-full mt-2">
       <StyledView className="flex-row items-center w-full space-x-3">
         {/* ✅ Country Code Box */}
-        <StyledView className="p-3 bg-white border border-gray-300 rounded-xl">
+        <StyledView className="p-3 bg-[#F8F8F8] border border-gray-300 rounded-xl">
           <CountryPickerComponent onSelectCountry={setSelectedCountry} />
         </StyledView>
 
         {/* ✅ Mobile Number Input Box */}
-        <StyledView className="flex-auto p-1 bg-white border border-gray-300 rounded-xl min-h-[50px]">
+        <StyledView className="flex-auto p-1 bg-[#F8F8F8] border border-gray-300 rounded-xl min-h-[50px]">
         <StyledTextInput
           className="w-full text-base placeholder-[#b3b3b3] font-regular pl-3"
           placeholder="98765-43210"
@@ -104,15 +104,15 @@ const MobileInput = () => {
 
       {/* ✅ OTP Button */}
       <StyledTouchableOpacity
-        className="bg-[#0088B1] p-4 rounded-xl items-center mt-5 w-full "
+        className="bg-[#0088B1] p-4 rounded-xl items-center mt-6 w-full "
         onPress={sendOTP} 
         disabled={loading}
       >
         {loading ? (
-          <ActivityIndicator color="#fff" />
+          <ActivityIndicator color="#F8F8F8" />
         ) : (
-          <StyledText className="text-lg font-medium text-center text-white">
-            Send the OTP
+          <StyledText className="text-base font-medium text-center text-[#F8F8F8]">
+            Send OTP
           </StyledText>
         )}
       </StyledTouchableOpacity>

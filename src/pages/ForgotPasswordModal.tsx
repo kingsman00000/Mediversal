@@ -23,10 +23,45 @@ const ForgotPasswordModal: React.FC<OTPModalProps> = ({ isVisible, onClose, emai
   const [showResetModal, setShowResetModal] = useState(false);
   const [jwtToken, setJwtToken] = useState<string | null>(null);
   const inputRefs = useRef<(TextInput | null)[]>(Array(6).fill(null));
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const [showErrors, setShowErrors] = useState(false);
+  const [errors, setErrors] = useState({ email: "", password: "" });
+
 
   // ✅ Resend OTP State
   const [resendTimer, setResendTimer] = useState(30);
   const [isResendDisabled, setIsResendDisabled] = useState(true);
+
+  
+  // ✅ Validate user input
+  const validateInput = () => {
+    let emailError = "";
+    let passwordError = "";
+
+    if (!credentials.email.trim()) {
+      emailError = "Email is required";
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(credentials.email)) {
+        emailError = "Invalid email format";
+      }
+    }
+
+    if (!credentials.password.trim()) {
+      passwordError = "Password is required";
+    } else {
+      const passwordRegex =
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z]).{8,}$/;
+      if (!passwordRegex.test(credentials.password)) {
+        passwordError =
+          "Password must be at least 8 characters, include a capital letter, a number & a special character";
+      }
+    }
+
+    setErrors({ email: emailError, password: passwordError });
+    return !(emailError || passwordError);
+  };
+
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -116,13 +151,32 @@ const ForgotPasswordModal: React.FC<OTPModalProps> = ({ isVisible, onClose, emai
   return (
     <>
       <Modal isVisible={isVisible} style={{ margin: 0, justifyContent: "flex-end" }}>
-        <StyledView className="items-center p-5 bg-white rounded-t-3xl">
-          <StyledText className={`mb-3 text-xl font-bold ${theme.colors.primary}`}>
-            Forgot Password
+
+        <StyledView className="items-center p-8 bg-white rounded-t-3xl">
+         <StyledView className = "items-left" >
+         <StyledText className={`mb-3 text-2xl font-bold ${theme.colors.primary}`}>
+            Verify to Reset Password
           </StyledText>
           <StyledText className="mb-3 text-base text-gray-600 text-start">
-            Code has been sent to your email. Please enter the 6-digit code below.
+            We've sent a 6-digit OTP to your email. Please enter it here.
           </StyledText>
+
+         </StyledView>
+          {/* Email Input */}
+            <StyledTextInput
+          className="w-full mb-4 mt-4 p-4 text-base text-gray-800 placeholder-[#b3b3b3] border border-gray-300 rounded-xl"
+          placeholder="mediversal@gmail.com"
+          value={credentials.email}
+          onChangeText={(text) => setCredentials({ ...credentials, email: text })}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoComplete="email"
+          returnKeyType="done"
+          placeholderTextColor="#b3b3b3"
+        />
+        {showErrors && errors.email && (
+          <StyledText className="mb-2 text-red-500">{errors.email}</StyledText>
+        )}
 
           {/* ✅ OTP Input Row */}
           <StyledView className="flex-row justify-center space-x-3">
@@ -132,7 +186,7 @@ const ForgotPasswordModal: React.FC<OTPModalProps> = ({ isVisible, onClose, emai
                 ref={(el) => {
                   inputRefs.current[index] = el as TextInput | null;
                 }}
-                className="w-12 h-12 text-lg font-bold text-center border border-gray-400 rounded-lg"
+                className={`w-12 h-12 text-lg ${theme.colors.black} font-medium text-center border border-gray-400 rounded-lg`}
                 keyboardType="numeric"
                 maxLength={1}
                 value={digit}
@@ -147,7 +201,7 @@ const ForgotPasswordModal: React.FC<OTPModalProps> = ({ isVisible, onClose, emai
             onPress={verifyOTP}
             disabled={loading}
           >
-            {loading ? <ActivityIndicator color="white" /> : <StyledText className="text-lg font-bold text-white">Verify OTP</StyledText>}
+            {loading ? <ActivityIndicator color="white" /> : <StyledText className="text-base font-medium text-[#F8F8F8]">Verify & Continue</StyledText>}
           </StyledTouchableOpacity>
 
           {/* ✅ Resend OTP Button with Timer */}
@@ -156,9 +210,16 @@ const ForgotPasswordModal: React.FC<OTPModalProps> = ({ isVisible, onClose, emai
             onPress={handleResendOTP}
             disabled={isResendDisabled}
           >
-            <StyledText className="text-lg font-bold text-blue-600">
-              {isResendDisabled ? `Resend OTP in ${resendTimer}s` : "Resend OTP"}
-            </StyledText>
+            {/* <StyledText className="text-lg font-bold text-blue-600">
+              {isResendDisabled ? `Didn't get OTP? Resend in ${resendTimer}s` : "Resend OTP"}
+            </StyledText> */}
+
+            <StyledView className = "mt-6">
+            {isResendDisabled ? <StyledText className = "text-base font-regular text-gray-400">
+              Didn't get OTP? Resend in <StyledText className="text-[#0088B1]">{resendTimer}s</StyledText></StyledText> : 
+              <StyledText className = "text-base font-medium text-[#0088B1]">Resend OTP</StyledText>}
+            </StyledView>
+            
           </StyledTouchableOpacity>
         </StyledView>
       </Modal>
